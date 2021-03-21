@@ -14,6 +14,7 @@ class Address {
       this.localidade,
       this.uf});
 
+//popula um objeto Address a partir de um json do ws consumido
   factory Address.fromJson(Map<String, dynamic> json) {
     return Address(
       cep: json['cep'],

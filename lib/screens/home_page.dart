@@ -58,6 +58,7 @@ class _HomePageState extends State<HomePage> {
                 height: 30,
               ),
               Center(
+                //FutureBuilder trata objetos do tipo Future
                 child: FutureBuilder(
                   future: futureAddress,
                   builder: (context, snapshot) {
