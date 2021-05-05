@@ -13,7 +13,9 @@ class _HomePageState extends State<HomePage> {
 
   void _getAddressByCep(String cepSearch) {
     setState(() {
-      this.futureAddress = buscarCep(cepSearch);
+      if (cepSearch.length == 8) {
+        this.futureAddress = buscarCep(cepSearch);
+      }
     });
   }
 
@@ -32,6 +34,7 @@ class _HomePageState extends State<HomePage> {
               TextField(
                 onChanged: (value) {
                   _cep = value;
+                  _getAddressByCep(this._cep);
                 },
                 maxLength: 8,
                 keyboardType: TextInputType.number,
@@ -40,54 +43,56 @@ class _HomePageState extends State<HomePage> {
                   labelText: 'CEP',
                 ),
               ),
+              /*
               SizedBox(
                 height: 10,
               ),
-              RaisedButton(
+               RaisedButton(
                 onPressed: () {
-                  if (this._cep.length == 8) {
-                    _getAddressByCep(this._cep);
-                  }
+                  _getAddressByCep(this._cep);
                 },
                 child: Text(
                   'Buscar',
                   style: TextStyle(fontSize: 25),
                 ),
-              ),
+              ), */
               SizedBox(
-                height: 30,
+                height: 25,
               ),
               Center(
                 //FutureBuilder trata objetos do tipo Future
-                child: FutureBuilder(
-                  future: futureAddress,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      var enderecoObj = snapshot.data;
-                      var text = (enderecoObj.logradouro != null)
-                          ? "${enderecoObj.logradouro}, "
-                          : "";
-                      text += (enderecoObj.complemento != null)
-                          ? "${enderecoObj.complemento}, "
-                          : "";
-                      text += (enderecoObj.bairro != null)
-                          ? "${enderecoObj.bairro}, "
-                          : "";
-                      text += (enderecoObj.localidade != null)
-                          ? "${enderecoObj.localidade}, "
-                          : "";
-                      text +=
-                          (enderecoObj.uf != null) ? "${enderecoObj.uf}." : "";
-                      return Text(
-                        text,
-                        style: TextStyle(fontSize: 30),
-                      );
-                    } else if (snapshot.hasError) {
-                      return Text("${snapshot.error}");
-                    }
+                child: Center(
+                  child: FutureBuilder(
+                    future: futureAddress,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        var enderecoObj = snapshot.data;
+                        var text = (enderecoObj.logradouro != '')
+                            ? "${enderecoObj.logradouro}, "
+                            : "";
+                        text += (enderecoObj.complemento != '')
+                            ? "${enderecoObj.complemento}, "
+                            : "";
+                        text += (enderecoObj.bairro != '')
+                            ? "${enderecoObj.bairro}, "
+                            : "";
+                        text += (enderecoObj.localidade != '')
+                            ? "${enderecoObj.localidade}, "
+                            : "";
+                        text += (enderecoObj.uf != null)
+                            ? "${enderecoObj.uf}."
+                            : "";
+                        return Text(
+                          text,
+                          style: TextStyle(fontSize: 15),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text('${snapshot.error}');
+                      }
 
-                    return Container();
-                  },
+                      return Container();
+                    },
+                  ),
                 ),
               ),
             ],
