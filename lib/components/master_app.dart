@@ -1,4 +1,4 @@
-import 'package:cep/screens/buscaCepScreen.dart';
+import 'package:cep/screens/busca_cep_screen.dart';
 import 'package:flutter/material.dart';
 
 class Master extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:cep/models/address.dart';
 import 'package:cep/services/cep_service.dart';
-import 'package:cep/widgets/cep_response_builder.dart';
+import 'package:cep/widgets/cep_response%20future.dart';
 import 'package:flutter/material.dart';
 
 class BuscaCepScreen extends StatefulWidget {
@@ -9,14 +9,14 @@ class BuscaCepScreen extends StatefulWidget {
 }
 
 class _BuscaCepState extends State<BuscaCepScreen> {
-  Future<Address> futureAddress;
+  Future<Address> addressFuture;
   String _cep = '';
   String addressFormatted = '';
 
   void _searchCEP(String cepSearch) {
     setState(() {
       if (cepSearch.length == 8) {
-        this.futureAddress = buscarCep(cepSearch);
+        this.addressFuture = buscarCep(cepSearch);
       }
     });
   }
@@ -24,7 +24,9 @@ class _BuscaCepState extends State<BuscaCepScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Buscar CEP Correios')),
+      appBar: AppBar(
+        title: Text('Buscar CEP Correios'),
+      ),
       body: SizedBox(
         height: double.infinity,
         width: double.infinity,
@@ -51,13 +53,8 @@ class _BuscaCepState extends State<BuscaCepScreen> {
               Center(
                 //FutureBuilder trata objetos do tipo Future
                 child: Center(
-                  child: FutureBuilder(
-                    future: futureAddress,
-                    builder: (context, snapshot) {
-                      return CepResponseBuilder(
-                        snapshot: snapshot,
-                      );
-                    },
+                  child: CepResponseFuture(
+                    addressFuture: this.addressFuture,
                   ),
                 ),
               ),

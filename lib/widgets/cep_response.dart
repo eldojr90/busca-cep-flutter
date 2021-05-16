@@ -1,12 +1,13 @@
 import 'package:cep/models/address.dart';
 import 'package:flutter/material.dart';
 
-class CepResponseBuilder extends StatelessWidget {
+// ignore: must_be_immutable
+class CepResponse extends StatelessWidget {
   final AsyncSnapshot snapshot;
   String _addressFormatted;
   String _responseText;
 
-  CepResponseBuilder({this.snapshot});
+  CepResponse({this.snapshot});
 
   void _updateAddressFormatted(Address address) {
     _addressFormatted =
