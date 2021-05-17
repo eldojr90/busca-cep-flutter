@@ -5,6 +5,8 @@ class Master extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      darkTheme: ThemeData.dark(),
+      themeMode: ThemeMode.dark,
       home: BuscaCepScreen(),
     );
   }
