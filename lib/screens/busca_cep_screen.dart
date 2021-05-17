@@ -15,9 +15,8 @@ class _BuscaCepState extends State<BuscaCepScreen> {
 
   void _searchCEP(String cepSearch) {
     setState(() {
-      if (cepSearch.length == 8) {
-        this.addressFuture = buscarCep(cepSearch);
-      }
+      this.addressFuture =
+          (cepSearch.length == 8) ? buscarCep(cepSearch) : null;
     });
   }
 
@@ -25,40 +24,39 @@ class _BuscaCepState extends State<BuscaCepScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text('Buscar CEP Correios'),
       ),
       body: SizedBox(
         height: double.infinity,
         width: double.infinity,
         child: Padding(
-          padding: const EdgeInsets.all(25),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextField(
-                onChanged: (value) {
-                  _cep = value;
-                  _searchCEP(_cep);
-                },
-                maxLength: 8,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'CEP',
+          padding: const EdgeInsets.all(10),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextField(
+                  onChanged: (value) {
+                    _cep = value;
+                    _searchCEP(_cep);
+                  },
+                  maxLength: 8,
+                  textAlign: TextAlign.center,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      labelText: 'CEP'),
                 ),
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Center(
-                //FutureBuilder trata objetos do tipo Future
-                child: Center(
-                  child: CepResponseFuture(
-                    addressFuture: this.addressFuture,
-                  ),
+                SizedBox(
+                  height: 25,
                 ),
-              ),
-            ],
+                CepResponseFuture(
+                  addressFuture: this.addressFuture,
+                ),
+              ],
+            ),
           ),
         ),
       ),
